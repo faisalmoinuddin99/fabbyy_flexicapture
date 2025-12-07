@@ -1,3 +1,6 @@
 2025-12-07 17:02:56,981 - INFO - Starting hot folder watcher...
 2025-12-07 17:04:22,389 - INFO - New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
 2025-12-07 17:04:22,537 - ERROR - Error processing C:\Users\ypcy\hot_folder\Acme Solutions.pdf: Unable to get page count. Is poppler installed and in PATH?
+2025-12-07 17:43:53,346 - INFO - Starting hot folder watcher...
+2025-12-07 17:44:27,798 - INFO - New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
+2025-12-07 17:44:43,486 - ERROR - Error: C:\Users\ypcy\hot_folder\Acme Solutions.pdf \u2192 tesseract is not installed or it's not in your PATH. See README file for more information.
