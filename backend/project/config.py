@@ -6,10 +6,11 @@ from pathlib import Path
 class Config:
     CONFIG_FILE = Path(__file__).parent / 'runtime_config.json'
     
-    # Default values
+    # Default values – NOW INCLUDING DATABASE_URL
     DEFAULTS = {
         "HOT_FOLDER_PATH": str(Path.home() / "hot_folder"),
-        "EXTRACTION_ENGINE": "rule_based"
+        "EXTRACTION_ENGINE": "rule_based",
+        "DATABASE_URL": f"sqlite:///{Path(__file__).parent / 'project.db'}"
     }
 
     _cache = None
@@ -42,12 +43,11 @@ class Config:
         config[key] = value
         cls._cache = config
         
-        # Save to disk
         os.makedirs(cls.CONFIG_FILE.parent, exist_ok=True)
         with open(cls.CONFIG_FILE, 'w') as f:
             json.dump(config, f, indent=2)
 
-    # FIXED: Proper way to expose as attributes
+    # Clean, working properties
     @property
     def HOT_FOLDER_PATH(cls):
         return cls.get('HOT_FOLDER_PATH')
@@ -55,6 +55,10 @@ class Config:
     @property
     def EXTRACTION_ENGINE(cls):
         return cls.get('EXTRACTION_ENGINE')
+
+    @property
+    def DATABASE_URL(cls):
+        return cls.get('DATABASE_URL')
 
     @classmethod
     def init_dirs(cls):
