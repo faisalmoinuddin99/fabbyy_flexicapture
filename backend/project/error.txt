@@ -1,10 +1,12 @@
-python main.py   
-Starting hot folder watcher...
-Starting hot folder watcher...
-Starting hot folder watcher...
-New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
-New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
-New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
-Error processing C:\Users\ypcy\hot_folder\Acme Solutions.pdf: Unable to get page count. Is poppler installed and in PATH?
-Error processing C:\Users\ypcy\hot_folder\Acme Solutions.pdf: Unable to get page count. Is poppler installed and in PATH?
-Error processing C:\Users\ypcy\hot_folder\Acme Solutions.pdf: Unable to get page count. Is poppler installed and in PATH?
+# 1. Install poppler automatically (takes 10 seconds)
+iwr https://github.com/oschwartz10612/poppler-windows/releases/download/v24.02.0-0/Release-24.02.0-0.zip -OutFile poppler.zip
+Expand-Archive poppler.zip -DestinationPath C:\ -Force
+Rename-Item "C:\poppler-24.02.0" "C:\poppler"
+
+# 2. Add to PATH forever
+$popplerPath = "C:\poppler\Library\bin"
+$env:Path += ";$popplerPath"
+[Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::User)
+
+Write-Host "Poppler installed and added to PATH!" -ForegroundColor Green
+Write-Host "Now restart your terminal and run: python main.py" -ForegroundColor Yellow
