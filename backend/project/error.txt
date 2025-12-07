@@ -1,0 +1,29 @@
+ python main.py      
+Traceback (most recent call last):
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\main.py", line 3, in <module>
+    from watcher import start_watcher
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\watcher.py", line 5, in <module>
+    from processor import process_pdf
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\processor.py", line 13, in <module>
+    logger = setup_logging()
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\utils\logging.py", line 6, in setup_logging
+    logging.basicConfig(
+    ~~~~~~~~~~~~~~~~~~~^
+        filename=Config.LOG_FILE,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        level=logging.INFO,
+        ^^^^^^^^^^^^^^^^^^^
+        format='%(asctime)s - %(levelname)s - %(message)s'
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ypcy\AppData\Local\Programs\Python\Python314\Lib\logging\__init__.py", line 2100, in basicConfig
+    h = FileHandler(filename, mode,
+                    encoding=encoding, errors=errors)
+  File "C:\Users\ypcy\AppData\Local\Programs\Python\Python314\Lib\logging\__init__.py", line 1219, in __init__
+    StreamHandler.__init__(self, self._open())
+                                 ~~~~~~~~~~^^
+  File "C:\Users\ypcy\AppData\Local\Programs\Python\Python314\Lib\logging\__init__.py", line 1248, in _open
+    return open_func(self.baseFilename, self.mode,
+                     encoding=self.encoding, errors=self.errors)
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ypcy\\OneDrive - Chevron\\Desktop\\POC projects\\Agentic Ai POC\\FABBYY_Fexlicapture\\fabbyy_flexicapture\\backend\\project\\logs\\app.log'
