@@ -24,7 +24,8 @@ class Config:
                 with open(cls.CONFIG_FILE, 'r') as f:
                     data = json.load(f)
                 cls._cache = {**cls.DEFAULTS, **data}
-            except:
+            except Exception as e:
+                print(f"[Config] Failed to read config file, using defaults: {e}")
                 cls._cache = cls.DEFAULTS.copy()
         else:
             cls._cache = cls.DEFAULTS.copy()
@@ -41,17 +42,22 @@ class Config:
         config[key] = value
         cls._cache = config
         
-        # Ensure directory exists
+        # Save to disk
         os.makedirs(cls.CONFIG_FILE.parent, exist_ok=True)
         with open(cls.CONFIG_FILE, 'w') as f:
             json.dump(config, f, indent=2)
 
-    # Easy access
-    HOT_FOLDER_PATH = property(lambda _: cls.get('HOT_FOLDER_PATH'))
-    EXTRACTION_ENGINE = property(lambda _: cls.get('EXTRACTION_ENGINE'))
+    # FIXED: Proper way to expose as attributes
+    @property
+    def HOT_FOLDER_PATH(cls):
+        return cls.get('HOT_FOLDER_PATH')
+
+    @property
+    def EXTRACTION_ENGINE(cls):
+        return cls.get('EXTRACTION_ENGINE')
 
     @classmethod
     def init_dirs(cls):
         os.makedirs(cls.HOT_FOLDER_PATH, exist_ok=True)
-        os.makedirs(str(Path(__file__).parent / 'temp_processing'), exist_ok=True)
-        os.makedirs(str(Path(__file__).parent / 'logs'), exist_ok=True)
+        os.makedirs(Path(__file__).parent / 'temp_processing', exist_ok=True)
+        os.makedirs(Path(__file__).parent / 'logs', exist_ok=True)
