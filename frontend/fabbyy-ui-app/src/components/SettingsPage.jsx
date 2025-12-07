@@ -205,7 +205,7 @@ const SettingsPage = ({ onBack }) => {
             {[
               { key: 'email', label: 'Email Accounts', icon: <Mail className="w-4 h-4" /> },
               { key: 'api', label: 'API Keys', icon: <Key className="w-4 h-4" /> },
-              { key: 'storage', label: 'Storage', icon: <Database className="w-4 h-4" /> },
+              { key: 'storage', label: 'Hot Folder', icon: <Database className="w-4 h-4" /> },
               { key: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" /> },
               { key: 'users', label: 'Users', icon: <Users className="w-4 h-4" /> },
               { key: 'exports', label: 'Export Destinations', icon: <Upload className="w-4 h-4" /> },
