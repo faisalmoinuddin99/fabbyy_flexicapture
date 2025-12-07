@@ -3,11 +3,17 @@ import os
 import shutil
 import numpy as np
 
-# YOUR MANUALLY DOWNLOADED POPPLER — THIS LINE MAKES IT WORK
+# POPPLER
 POPPLER_PATH = r"C:\poppler\poppler-25.12.0\Library\bin"
 os.environ["PATH"] += os.pathsep + POPPLER_PATH
 
+# TESSERACT PORTABLE – UPDATED WITH TESSDATA PATH
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r"C:\tesseract\tesseract.exe"
+os.environ['TESSDATA_PREFIX'] = r"C:\tesseract\tessdata"  # For language files
+
 from pdf2image import convert_from_path
+# ... rest of your file unchanged
 import cv2
 import pytesseract
 import json
