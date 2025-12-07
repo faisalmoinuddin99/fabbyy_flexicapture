@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np  # ← ADD THIS (was missing before!)
 
 # ──────────────────────────────────────────────────────────────
-# AUTO POPPLER DOWNLOADER – WORKS WITHOUT ADMIN RIGHTS
+# AUTO POPPLER DOWNLOADER – UPDATED FOR LATEST VERSION (25.12.0-0)
 # ──────────────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).parent
 POPPLER_DIR = PROJECT_ROOT / "poppler"
@@ -17,7 +17,8 @@ if not BIN_DIR.exists():
     print("Downloading portable poppler (one-time only, ~40 MB)...")
     POPPLER_DIR.mkdir(exist_ok=True)
     zip_path = POPPLER_DIR / "poppler.zip"
-    url = "https://github.com/oschwartz10612/poppler-windows/releases/download/v24.02.0-0/poppler-24.02.0_x86.zip"
+    # FIXED URL: Latest release (Dec 2025)
+    url = "https://github.com/oschwartz10612/poppler-windows/releases/download/v25.12.0-0/Release-25.12.0-0.zip"
     urllib.request.urlretrieve(url, zip_path)
     print("Extracting poppler...")
     with zipfile.ZipFile(zip_path, 'r') as z:
