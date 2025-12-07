@@ -1,10 +1,1 @@
-PS C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project> python .\main.py
-Starting hot folder watcher...
-Starting hot folder watcher...
-Starting hot folder watcher...
-New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
-New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
-New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
-Error: C:\Users\ypcy\hot_folder\Acme Solutions.pdf → tesseract is not installed or it's not in your PATH. See README file for more information.
-Error: C:\Users\ypcy\hot_folder\Acme Solutions.pdf → tesseract is not installed or it's not in your PATH. See README file for more information.
-Error: C:\Users\ypcy\hot_folder\Acme Solutions.pdf → tesseract is not installed or it's not in your PATH. See README file for more information.
+url = "https://github.com/UB-Mannheim/tesseract/releases/download/v5.4.1.20240606/tesseract-ocr-w64-setup-5.4.1.20240606.exe"
