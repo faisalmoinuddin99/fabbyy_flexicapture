@@ -4,9 +4,9 @@ import json
 from pathlib import Path
 
 class Config:
-    CONFIG_FILE = Path(__file__).parent / 'runtime_config.json'
-    
-    # Default values – NOW INCLUDING DATABASE_URL
+    CONFIG_FILE = Path(__file__).parent / "runtime_config.json"
+
+    # Default configuration
     DEFAULTS = {
         "HOT_FOLDER_PATH": str(Path.home() / "hot_folder"),
         "EXTRACTION_ENGINE": "rule_based",
@@ -22,15 +22,15 @@ class Config:
 
         if cls.CONFIG_FILE.exists():
             try:
-                with open(cls.CONFIG_FILE, 'r') as f:
+                with open(cls.CONFIG_FILE, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 cls._cache = {**cls.DEFAULTS, **data}
             except Exception as e:
-                print(f"[Config] Failed to read config file, using defaults: {e}")
+                print(f"[Config] Could not read config file, using defaults: {e}")
                 cls._cache = cls.DEFAULTS.copy()
         else:
             cls._cache = cls.DEFAULTS.copy()
-        
+
         return cls._cache
 
     @classmethod
@@ -42,26 +42,36 @@ class Config:
         config = cls.load()
         config[key] = value
         cls._cache = config
-        
-        os.makedirs(cls.CONFIG_FILE.parent, exist_ok=True)
-        with open(cls.CONFIG_FILE, 'w') as f:
-            json.dump(config, f, indent=2)
+        # Save to disk
+        try:
+            os.makedirs(cls.CONFIG_FILE.parent, exist_ok=True)
+            with open(cls.CONFIG_FILE, "w", encoding="utf-8") as f:
+                json.dump(config, f, indent=2)
+        except Exception as e:
+            print(f"[Config] Failed to save config: {e}")
 
-    # Clean, working properties
+    # CORRECT WAY → use @classmethod + @property together
+    @classmethod
     @property
-    def HOT_FOLDER_PATH(cls):
-        return cls.get('HOT_FOLDER_PATH')
+    def HOT_FOLDER_PATH(cls) -> str:
+        return cls.get("HOT_FOLDER_PATH")
 
+    @classmethod
+    @classmethod
     @property
-    def EXTRACTION_ENGINE(cls):
-        return cls.get('EXTRACTION_ENGINE')
+    def EXTRACTION_ENGINE(cls) -> str:
+        return cls.get("EXTRACTION_ENGINE")
 
+    @classmethod
     @property
-    def DATABASE_URL(cls):
-        return cls.get('DATABASE_URL')
+    def DATABASE_URL(cls) -> str:
+        return cls.get("DATABASE_URL")
 
     @classmethod
     def init_dirs(cls):
-        os.makedirs(cls.HOT_FOLDER_PATH, exist_ok=True)
-        os.makedirs(Path(__file__).parent / 'temp_processing', exist_ok=True)
-        os.makedirs(Path(__file__).parent / 'logs', exist_ok=True)
+        try:
+            os.makedirs(cls.HOT_FOLDER_PATH, exist_ok=True)
+            os.makedirs(Path(__file__).parent / "temp_processing", exist_ok=True)
+            os.makedirs(Path(__file__).parent / "logs", exist_ok=True)
+        except Exception as e:
+            print(f"[Config] Failed to create directories: {e}")
