@@ -1,0 +1,3 @@
+2025-12-07 17:02:56,981 - INFO - Starting hot folder watcher...
+2025-12-07 17:04:22,389 - INFO - New PDF detected: C:\Users\ypcy\hot_folder\Acme Solutions.pdf
+2025-12-07 17:04:22,537 - ERROR - Error processing C:\Users\ypcy\hot_folder\Acme Solutions.pdf: Unable to get page count. Is poppler installed and in PATH?
