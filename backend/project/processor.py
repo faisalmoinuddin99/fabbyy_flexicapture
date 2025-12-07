@@ -1,34 +1,11 @@
 # project/processor.py
 import os
 import shutil
-import urllib.request
-import zipfile
-from pathlib import Path
-import numpy as np  # ← ADD THIS (was missing before!)
+import numpy as np
 
-# ──────────────────────────────────────────────────────────────
-# AUTO POPPLER DOWNLOADER – UPDATED FOR LATEST VERSION (25.12.0-0)
-# ──────────────────────────────────────────────────────────────
-PROJECT_ROOT = Path(__file__).parent
-POPPLER_DIR = PROJECT_ROOT / "poppler"
-BIN_DIR = POPPLER_DIR / "Library" / "bin"
-
-if not BIN_DIR.exists():
-    print("Downloading portable poppler (one-time only, ~40 MB)...")
-    POPPLER_DIR.mkdir(exist_ok=True)
-    zip_path = POPPLER_DIR / "poppler.zip"
-    # FIXED URL: Latest release (Dec 2025)
-    url = "https://github.com/oschwartz10612/poppler-windows/releases/download/v25.12.0-0/Release-25.12.0-0.zip"
-    urllib.request.urlretrieve(url, zip_path)
-    print("Extracting poppler...")
-    with zipfile.ZipFile(zip_path, 'r') as z:
-        z.extractall(POPPLER_DIR)
-    zip_path.unlink()
-    print("Poppler ready! No admin rights needed.")
-
-# Add poppler to PATH only for this Python process
-os.environ["PATH"] += os.pathsep + str(BIN_DIR)
-# ──────────────────────────────────────────────────────────────
+# YOUR MANUALLY DOWNLOADED POPPLER — THIS LINE MAKES IT WORK
+POPPLER_PATH = r"C:\poppler\poppler-25.12.0\Library\bin"
+os.environ["PATH"] += os.pathsep + POPPLER_PATH
 
 from pdf2image import convert_from_path
 import cv2
@@ -59,7 +36,7 @@ def preprocess_image(image):
     return rotated
 
 def ocr_page(image):
-    text = pytesseract.image_to_string(image)
+    text = pytesseract.image_to_string(image, lang='eng')
     data = pytesseract.image_to_data(image, output_type=pytesseract.Output.DICT)
     return text, data
 
@@ -74,7 +51,7 @@ def process_pdf(pdf_path):
         temp_path = os.path.join(Config.TEMP_PROCESSING_DIR, os.path.basename(pdf_path))
         shutil.move(pdf_path, temp_path)
 
-        # This line will now work because poppler is auto-added above
+        # This now works perfectly with your manual poppler
         images = convert_from_path(temp_path, dpi=300)
 
         doc = Document(batch_id=batch.id, doc_type='invoice')
@@ -83,8 +60,10 @@ def process_pdf(pdf_path):
 
         extractor = get_extractor(Config.EXTRACTION_ENGINE)
 
-        for page_num, img in enumerate(images, start=1):
-            preprocessed = preprocess_image(np.array(img))
+        for page_num, pil_img in enumerate(images, start=1):
+            img_array = np.array(pil_img)
+            preprocessed = preprocess_image(img_array)
+
             full_text, ocr_data = ocr_page(preprocessed)
 
             image_path = os.path.join(Config.TEMP_PROCESSING_DIR, f'page_{batch.id}_{page_num}.jpg')
@@ -114,10 +93,10 @@ def process_pdf(pdf_path):
         session.commit()
         batch.status = 'completed'
         session.commit()
-        logger.info(f'Successfully processed: {pdf_path}')
+        logger.info(f"Processed: {os.path.basename(pdf_path)}")
 
     except Exception as e:
-        logger.error(f'Error processing {pdf_path}: {e}')
+        logger.error(f"Error: {pdf_path} → {e}")
         if batch:
             batch.status = 'error'
             session.commit()
