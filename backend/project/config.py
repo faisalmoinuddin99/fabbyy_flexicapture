@@ -1,7 +1,15 @@
+
 # project/config.py
 import os
 import json
 from pathlib import Path
+
+
+class classproperty(property):
+    """A property that works on the class, not instances."""
+    def __get__(self, obj, cls):
+        return self.fget(cls)
+
 
 class Config:
     CONFIG_FILE = Path(__file__).parent / "runtime_config.json"
@@ -10,10 +18,17 @@ class Config:
     DEFAULTS = {
         "HOT_FOLDER_PATH": str(Path.home() / "hot_folder"),
         "EXTRACTION_ENGINE": "rule_based",
-        "DATABASE_URL": f"sqlite:///{Path(__file__).parent / 'project.db'}"
+        "DATABASE_URL": f"sqlite:///{Path(__file__).parent / 'project.db'}",
+        "LOG_FILE": str(Path(__file__).parent / "logs" / "app.log"),
+
     }
 
     _cache = None
+    
+    @classproperty
+    def LOG_FILE(cls) -> str:
+        return cls.get("LOG_FILE")
+
 
     @classmethod
     def load(cls):
@@ -50,20 +65,16 @@ class Config:
         except Exception as e:
             print(f"[Config] Failed to save config: {e}")
 
-    # CORRECT WAY → use @classmethod + @property together
-    @classmethod
-    @property
+    # ---- True class-level properties ----
+    @classproperty
     def HOT_FOLDER_PATH(cls) -> str:
         return cls.get("HOT_FOLDER_PATH")
 
-    @classmethod
-    @classmethod
-    @property
+    @classproperty
     def EXTRACTION_ENGINE(cls) -> str:
         return cls.get("EXTRACTION_ENGINE")
 
-    @classmethod
-    @property
+    @classproperty
     def DATABASE_URL(cls) -> str:
         return cls.get("DATABASE_URL")
 

@@ -1,5 +1,7 @@
 # project/main.py
 
+from config import Config
+
 if __name__ == '__main__':
     Config.init_dirs()
     init_db()
