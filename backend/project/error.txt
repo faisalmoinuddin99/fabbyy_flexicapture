@@ -1,10 +1,11 @@
-e\backend\project> python -m api.main
+backend\project> python -m api.main
+INFO:core.config:Configuration loaded from C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\config.json
 Traceback (most recent call last):
-  File "<frozen runpy>", line 189, in _run_module_as_main
-  File "<frozen runpy>", line 159, in _get_module_details
-  File "<frozen importlib._bootstrap_external>", line 896, in get_code
-  File "<frozen importlib._bootstrap_external>", line 826, in source_to_code
-  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\api\main.py", line 68
-    finally:
-SyntaxError: expected 'except' or 'finally' bloc
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\api\main.py", line 24, in <module>
+    from api.endpoints import batches, settings, processing
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\api\endpoints\batches.py", line 13, in <module>
+    from core.database import get_db, Batch, ProcessingStatus
+ImportError: cannot import name 'get_db' from 'core.database' (C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\core\database.py)
+(venv) PS C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project>
