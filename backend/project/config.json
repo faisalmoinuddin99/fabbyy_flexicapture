@@ -1,0 +1,28 @@
+{
+  "hot_folder": "C:\\Users\\ypcy\\invoice_hot_folder",
+  "processed_folder": "C:\\Users\\ypcy\\OneDrive - Chevron\\Desktop\\POC projects\\Agentic Ai POC\\FABBYY_Fexlicapture\\fabbyy_flexicapture\\backend\\project\\storage\\processed",
+  "error_folder": "C:\\Users\\ypcy\\OneDrive - Chevron\\Desktop\\POC projects\\Agentic Ai POC\\FABBYY_Fexlicapture\\fabbyy_flexicapture\\backend\\project\\storage\\errors",
+  "archive_folder": "C:\\Users\\ypcy\\OneDrive - Chevron\\Desktop\\POC projects\\Agentic Ai POC\\FABBYY_Fexlicapture\\fabbyy_flexicapture\\backend\\project\\storage\\archive",
+  "temp_folder": "C:\\Users\\ypcy\\OneDrive - Chevron\\Desktop\\POC projects\\Agentic Ai POC\\FABBYY_Fexlicapture\\fabbyy_flexicapture\\backend\\project\\storage\\temp_processing",
+  "database_url": "sqlite:///C:\\Users\\ypcy\\OneDrive - Chevron\\Desktop\\POC projects\\Agentic Ai POC\\FABBYY_Fexlicapture\\fabbyy_flexicapture\\backend\\project\\storage\\database.db",
+  "extraction_engine": "rule_based",
+  "ocr_engine": "tesseract",
+  "watch_subfolders": false,
+  "file_patterns": [
+    "*.pdf",
+    "*.jpg",
+    "*.jpeg",
+    "*.png",
+    "*.tiff",
+    "*.tif"
+  ],
+  "poll_interval": 5,
+  "max_file_size_mb": 50,
+  "api_host": "0.0.0.0",
+  "api_port": 8000,
+  "log_level": "INFO",
+  "enable_notifications": false,
+  "notification_email": "",
+  "auto_start_processing": true,
+  "parallel_workers": 2
+}
