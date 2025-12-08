@@ -69,7 +69,16 @@ class Config:
             "enable_notifications": False,
             "notification_email": "",
             "auto_start_processing": True,
-            "parallel_workers": 2
+            "parallel_workers": 2,
+
+            # === ADD THESE LINES ===
+            "allowed_origins": [
+                "http://localhost:3000",
+                "http://localhost:8080",
+                "http://127.0.0.1:3000",
+                "http://127.0.0.1:8080",
+            ],
+            # ========================
         }
 
         if self.CONFIG_FILE.exists():
@@ -239,6 +248,18 @@ class Config:
     @property
     def watch_subfolders(self) -> bool:
         return bool(self.get("watch_subfolders", False))
+    
+    @property
+    def allowed_origins(self) -> List[str]:
+        """
+        List of allowed CORS origins.
+        In production, replace with your real frontend domains.
+        Use ["*"] only in trusted internal networks.
+        """
+        origins = self.get("allowed_origins", [])
+        if isinstance(origins, str):
+            return [origins] if origins.strip() else []
+        return [str(origin).strip() for origin in origins if origin]
 
 
 # Global singleton instance (imported elsewhere as `from core.config import config`)
