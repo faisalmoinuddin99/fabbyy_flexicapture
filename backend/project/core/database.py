@@ -68,7 +68,7 @@ engine = create_engine(
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
 
 
-def get_db_session():
+def get_db():
     """Dependency for FastAPI: yield a new session per request."""
     db = SessionLocal()
     try:
