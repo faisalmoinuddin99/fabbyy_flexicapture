@@ -5,7 +5,4 @@ Traceback (most recent call last):
   File "<frozen runpy>", line 88, in _run_code
   File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\api\main.py", line 24, in <module>
     from api.endpoints import batches, settings, processing
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\api\endpoints\batches.py", line 13, in <module>
-    from core.database import get_db, Batch, ProcessingStatus
-ImportError: cannot import name 'get_db' from 'core.database' (C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\core\database.py)
-(venv) PS C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project>
+ImportError: cannot import name 'processing' from 'api.endpoints' (unknown location)
