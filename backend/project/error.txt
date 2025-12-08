@@ -1,29 +1,112 @@
 e\backend\project> python -m core.test_db
 INFO:core.config:Configuration loaded from C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\config.json
 Traceback (most recent call last):
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: index ix_batches_file_hash already exists
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
   File "<frozen runpy>", line 198, in _run_module_as_main
   File "<frozen runpy>", line 88, in _run_code
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\core\test_db.py", line 2, in <module>
-    from core.database import init_db, SessionLocal, Batch, ProcessingStatus
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\core\database.py", line 154, in <module>
-    class Document(Base):
-    ...<22 lines>...
-            return f"<Document id={self.id} type={self.doc_type} batch={self.batch_id}>"
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\orm\decl_api.py", line 846, in __init_subclass__
-    _as_declarative(cls._sa_registry, cls, cls.__dict__)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 245, in _as_declarative
-    return _MapperConfig.setup_mapping(registry, cls, dict_, None, {})
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 326, in setup_mapping
-    return _ClassScanMapperConfig(
-        registry, cls_, dict_, table, mapper_kw
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\core\test_db.py", line 4, in <module>
+    init_db(drop_all=True)  # only for testing!
+    ~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\core\database.py", line 89, in init_db
+    Base.metadata.create_all(bind=engine)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\schema.py", line 5928, in create_all
+    bind._run_ddl_visitor(
+    ~~~~~~~~~~~~~~~~~~~~~^
+        ddl.SchemaGenerator, self, checkfirst=checkfirst, tables=tables
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     )
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 573, in __init__
-    self._extract_mappable_attributes()
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\orm\decl_base.py", line 1530, in _extract_mappable_attributes
-    raise exc.InvalidRequestError(
+    ^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 3252, in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2459, in _run_ddl_visitor
+    ).traverse_single(element)
+      ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\visitors.py", line 661, in traverse_single
+    return meth(obj, **kw)
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\ddl.py", line 984, in visit_metadata
+    self.traverse_single(
+    ~~~~~~~~~~~~~~~~~~~~^
+        table,
+        ^^^^^^
     ...<2 lines>...
+        _is_metadata_operation=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     )
-sqlalchemy.exc.InvalidRequestError: Attribute name 'metadata' is reserved when using the Declarative API.
+    ^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\visitors.py", line 661, in traverse_single
+    return meth(obj, **kw)
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\ddl.py", line 1026, in visit_table
+    self.traverse_single(index, create_ok=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\visitors.py", line 661, in traverse_single
+    return meth(obj, **kw)
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\ddl.py", line 1063, in visit_index
+    CreateIndex(index)._invoke_with(self.connection)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\ddl.py", line 321, in _invoke_with
+    return bind.execute(self)
+           ~~~~~~~~~~~~^^^^^^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\sql\ddl.py", line 187, in _execute_on_connection
+    return connection._execute_ddl(
+           ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1530, in _execute_ddl
+    ret = self._execute_context(
+        dialect,
+    ...<4 lines>...
+        compiled,
+    )
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) index ix_batches_file_hash already exists
+[SQL: CREATE INDEX ix_batches_file_hash ON batches (file_hash)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
