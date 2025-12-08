@@ -151,6 +151,9 @@ class Batch(Base):
         return f"<Batch id={self.id} filename='{self.filename}' status='{self.status}'>"
 
 
+# core/database.py
+# ... everything else stays exactly the same ...
+
 class Document(Base):
     __tablename__ = "documents"
 
@@ -161,7 +164,11 @@ class Document(Base):
         SQLEnum(DocumentType), default=DocumentType.UNKNOWN, index=True
     )
     confidence: Mapped[float] = mapped_column(Float, default=0.0)
-    metadata: Mapped[dict] = mapped_column(JSON, default=dict, server_default="{}")
+
+    # RENAME THIS LINE — this was the problem!
+    extra_metadata: Mapped[dict] = mapped_column(          # ← changed from "metadata"
+        JSON, default=dict, server_default="{}", nullable=False
+    )
 
     # Relationships
     batch: Mapped[Batch] = relationship("Batch", back_populates="documents")
@@ -175,8 +182,7 @@ class Document(Base):
 
     def __repr__(self) -> str:
         return f"<Document id={self.id} type={self.doc_type} batch={self.batch_id}>"
-
-
+        
 class Page(Base):
     __tablename__ = "pages"
 
