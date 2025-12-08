@@ -9,6 +9,8 @@ viewing extracted pages/images, and system health.
 import os
 import logging
 from pathlib import Path
+from datetime import datetime
+from typing import Generator
 
 import uvicorn
 from fastapi import FastAPI, Depends, HTTPException
@@ -47,24 +49,23 @@ app = FastAPI(
 # --------------------------------------------------------------------------- #
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=config.allowed_origins,        # Use config list instead of ["*"]
+    allow_origins=config.allowed_origins,  # e.g. ["http://localhost:3000", ...] or ["*"] in dev
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
 # --------------------------------------------------------------------------- #
-# Dependency: Database Session
+# Dependency: Database Session (FIXED!)
 # --------------------------------------------------------------------------- #
-def get_db() -> Session:
+def get_db() -> Generator[Session, None, None]:
     """
     Dependency that provides a SQLAlchemy session.
-    Automatically closes the session after the request.
+    Automatically closes the session after the request, even if an error occurs.
     """
     db = SessionLocal()
     try:
-        try:
-            yield db
+        yield db
     finally:
         db.close()
 
@@ -78,12 +79,12 @@ app.include_router(processing.router, prefix="/api/v1", tags=["Processing"])
 # --------------------------------------------------------------------------- #
 # Static Files (processed page images, previews, etc.)
 # --------------------------------------------------------------------------- #
-static_dir = Path(config.temp_folder)  # Recommended: use temp_folder for previews
+static_dir = Path(config.temp_folder)
 static_dir.mkdir(parents=True, exist_ok=True)
 
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-# Optional: also serve archived files or exports
+# Optional: serve archived/exported files
 # app.mount("/archives", StaticFiles(directory=config.processed_folder), name="archives")
 
 # --------------------------------------------------------------------------- #
@@ -112,7 +113,7 @@ async def health_check(db: Session = Depends(get_db)):
     try:
         # Test database connection
         db.execute(text("SELECT 1"))
-        
+
         # Check hot folder
         hot_folder_path = Path(config.hot_folder)
         hot_folder_exists = hot_folder_path.exists()
@@ -140,14 +141,20 @@ async def health_check(db: Session = Depends(get_db)):
 
 
 # --------------------------------------------------------------------------- #
-# Startup / Shutdown Events (Optional but recommended)
+# Startup / Shutdown Events
 # --------------------------------------------------------------------------- #
 @app.on_event("startup")
 async def startup_event():
     """Actions to perform when the API starts."""
     logger.info("Starting Invoice Automation API...")
-    # Ensure critical directories exist
-    for path in [config.hot_folder, config.temp_folder, config.processed_folder, config.error_folder]:
+
+    # Ensure all critical directories exist
+    for path in [
+        config.hot_folder,
+        config.temp_folder,
+        config.processed_folder,
+        config.error_folder,
+    ]:
         Path(path).mkdir(parents=True, exist_ok=True)
         logger.info(f"Ensured directory exists: {path}")
 
@@ -167,12 +174,11 @@ async def shutdown_event():
 # Entry Point
 # --------------------------------------------------------------------------- #
 if __name__ == "__main__":
-    # Use __file__ to avoid hardcoding module name
     uvicorn.run(
-        "api.main:app",  # Always correct even if filename changes
+        "api.main:app",  # Reliable even if filename changes
         host=config.api_host,
         port=config.api_port,
-        reload=config.debug,  # Only reload in debug mode
+        reload=config.debug,
         log_level="info",
-        workers=1 if config.debug else None,  # Don't use workers in reload mode
+        workers=1 if config.debug else None,  # Workers + reload = crash
     )
