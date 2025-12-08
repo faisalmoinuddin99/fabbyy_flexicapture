@@ -3,6 +3,7 @@ INFO:core.config:Configuration loaded from C:\Users\ypcy\OneDrive - Chevron\Desk
 Traceback (most recent call last):
   File "<frozen runpy>", line 198, in _run_module_as_main
   File "<frozen runpy>", line 88, in _run_code
-  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\api\main.py", line 24, in <module>
-    from api.endpoints import batches, settings, processing
-ImportError: cannot import name 'processing' from 'api.endpoints' (unknown location)
+  File "C:\Users\ypcy\OneDrive - Chevron\Desktop\POC projects\Agentic Ai POC\FABBYY_Fexlicapture\fabbyy_flexicapture\backend\project\api\main.py", line 75, in <module>
+    app.include_router(batches.router, prefix="/api/v1", tags=["Batches"])
+                       ^^^^^^^^^^^^^^
+AttributeError: 'APIRouter' object has no attribute 'router'. Did you mean: 'route'?
